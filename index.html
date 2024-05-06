@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+        <link
+        rel="icon"
+        type="image/png"
+        sizes="32x32"
+        href="https://github.com/ydctnr/Tip-Calculator-App/blob/main/images/favicon-32x32.png?raw=true">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+
+        <title>Tip Calculator App</title>
+
+        <link rel="stylesheet" href="index.css">
+    </head>
+    <body>
+        <header class="logo">
+            <img src="https://raw.githubusercontent.com/ydctnr/Tip-Calculator-App/49d054b05680b280d5c39e49ef68ac00b66fdf90/images/logo.svg" alt="logo">
+        </header>
+        <main class="card">
+            <form class="input">
+                <div class="input-row first">
+                    <p>Bills</p>
+                    <span><img src="https://raw.githubusercontent.com/ydctnr/Tip-Calculator-App/49d054b05680b280d5c39e49ef68ac00b66fdf90/images/icon-dollar.svg" alt="dollar-icon"></span>
+                    <input type="number" class="bill" id="bill" placeholder="0"/>
+                </div>
+                <div class="input-row second">
+                    <p>Select Tip %</p>
+                    <ul>
+                        <li id="5" class="selected">5%</li>
+                        <li id="10" class="selected">10%</li>
+                        <li id="15" class="selected">15%</li>
+                        <li id="25" class="selected">25%</li>
+                        <li id="50" class="selected">50%</li>
+                        <input class="custom" id="custom" type="number" placeholder="Custom">
+                    </ul>
+                </div>
+                <div class="input-row third">
+                    <p>Number Of People</p>
+                    <span><img src="https://raw.githubusercontent.com/ydctnr/Tip-Calculator-App/49d054b05680b280d5c39e49ef68ac00b66fdf90/images/icon-person.svg" alt="person-icon"></span>
+                    <input type="number" id="people" class="people" placeholder="0"/>
+                </div>
+            </form>
+            <section class="result">
+                <div class="row">
+                    <div class="tip-amount">
+                        <h6>Tip Amount</h6>
+                        <p>/ person</p>
+                    </div>
+                    <div class="tip-amount-result">
+                        <p id="tip-amount">$0.00</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="total">
+                        <h6>Total</h6>
+                        <p>/ person</p>
+                    </div>
+                    <div class="total-result">
+                        <p id="total">$0.00</p>
+                    </div>
+                </div>
+                    <button class="reset" id="reset">RESET</button>
+            </section>
+        </main>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const billInput = document.getElementById("bill");
+                const tipInputs = document.querySelectorAll(".input-row.second li");
+                const customTipInput = document.getElementById("custom");
+                const peopleInput = document.getElementById("people");
+                const tipAmountResult = document.getElementById("tip-amount");
+                const totalResult = document.getElementById("total");
+                const resetButton = document.getElementById("reset");
+
+
+                function calculateTip() {
+                    const bill = parseFloat(billInput.value) || 0;
+                    let tipPercent = 0;
+                    tipInputs.forEach(function(input) {
+                        if (input.classList.contains("selected")) {
+                            tipPercent = parseFloat(input.textContent);
+                        }
+                    });
+                    if (customTipInput.value !== ""){
+                        tipPercent = parseFloat(customTipInput.value);
+                    }
+                    const numberOfPeople = parseFloat(peopleInput.value) || 1;
+                    const tipAmount = (bill * tipPercent) / 100;
+                    const totalPerPerson = (bill + tipAmount) / numberOfPeople;
+                    tipAmountResult.textContent = "$" + tipAmount.toFixed(2);
+                    totalResult.textContent = "$" + totalPerPerson.toFixed(2);
+                }
+
+
+                function resetCalculator() {
+                    billInput.value = "";
+                    customTipInput.value = "";
+                    tipInputs.forEach(function(input) {
+                        input.classList.remove("selected");
+                        input.style.backgroundColor = "var(--very-dark-cyan)";
+                        input.style.color = "var(--white)";
+                    });
+                    tipInputs[2].classList.add("selected");
+                    peopleInput.value = "";
+                    tipAmountResult.textContent = "$0.00";
+                    totalResult.textContent = "$0.00";
+                    resetButton.style.backgroundColor = "hsl(183, 100%, 20%)";
+                }
+
+
+                function checkInputNotEmpty() {
+                    const billValue = billInput.value.trim();
+                    const customTipValue = customTipInput.value.trim();
+                    const peopleValue = peopleInput.value.trim();
+
+
+                    if (billValue !== "" || customTipValue !== "" || peopleValue !== "") {
+                        resetButton.style.backgroundColor = "var(--strong-cyan)";
+                    } else {
+                        resetButton.style.backgroundColor = "hsl(183, 100%, 20%)";
+                    }
+                }
+
+
+                billInput.addEventListener("input", function() {
+                    calculateTip();
+                    checkInputNotEmpty();
+                });
+                customTipInput.addEventListener("input", function() {
+                    calculateTip();
+                    checkInputNotEmpty();
+                });
+                tipInputs.forEach(function(input) {
+                     input.addEventListener("click", function() {
+                        tipInputs.forEach(function(tipInput) {
+                            tipInput.classList.remove("selected");
+                            tipInput.style.backgroundColor = "var(--very-dark-cyan)";         
+                        });
+                        input.classList.add("selected");
+                        input.style.backgroundColor = "var(--strong-cyan)";
+                        input.style.color = "var(--very-dark-cyan)"
+                        calculateTip();
+                        checkInputNotEmpty();
+                    });
+                });
+                peopleInput.addEventListener("input", function() {
+                    calculateTip();
+                    checkInputNotEmpty();
+                });
+
+   
+                resetButton.addEventListener("click", resetCalculator);
+
+                resetButton.addEventListener("mouseenter", function() {
+                    resetButton.style.backgroundColor = "hsl(185, 41%, 75%)";
+                });
+
+                resetButton.addEventListener("mouseleave", function() {
+                    checkInputNotEmpty();
+                });
+                calculateTip();
+                checkInputNotEmpty();
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,200 @@
+:root{
+    --strong-cyan: hsl(172, 67%, 45%);
+    --very-dark-cyan: hsl(183, 100%, 15%);
+    --dark-grayish-cyan: hsl(186, 14%, 43%);
+    --grayish-cyan: hsl(184, 14%, 56%);
+    --light-grayish-cyan: hsl(185, 41%, 84%);
+    --very-light-grayish-cyan: hsl(189, 41%, 97%);
+    --white: hsl(0, 0%, 100%);
+}
+body{
+    background-color: var(--light-grayish-cyan);
+    margin: 0;
+    padding: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    font-family: "Space Mono", "Courier New", monospace;
+}
+.logo img{
+    width: 5%;
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.card{
+    background-color: var(--white);
+    max-width: 500px;
+    height: 220px;
+    position: absolute;
+    top: 30%;
+    border-radius: 15px;
+    box-shadow: 0 2px 4px var(--very-dark-cyan);
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    align-items: center; 
+    padding: 20px; 
+}
+.input{
+    margin-top: -15px;
+}
+.input-row p{ 
+    color: var(--dark-grayish-cyan);
+    font-size: 10px;
+    font-weight: 700;
+}
+.input-row span{ 
+    position: absolute; 
+    padding: 1px 0px 0px 10px; 
+}
+.input-row span > img{
+    width: 65%;
+}
+.first input, .second input, .third input{
+    background-color: hsl(189, 41%, 94%);
+    border-style: none;
+    border-radius: 4px;
+    width: calc(100% - 40px); 
+    padding: 4px 6px;
+}
+.first input, .third input{
+    text-align: right;
+}
+.first input::placeholder, .third input::placeholder, .second input::placeholder{
+    font-family: "Space Mono", "Courier New", monospace;
+    color: var(--grayish-cyan);
+    font-weight: bold;
+    margin-right: 5px;
+}
+.second input{
+    text-align: center;
+    width: 80%;
+    font-size: 12px;
+}
+.first input:focus, .second input:focus, .third input:focus{
+    border: 1px solid var(--strong-cyan);
+    outline: 1px solid var(--strong-cyan);
+}
+.input-row ul{ 
+    padding-inline-start: 0px;
+    display: grid; 
+    grid-template-columns: 1fr 1fr 1fr; 
+    grid-gap: 5px; 
+    width: 80%;
+    margin-top: 0; 
+    text-align: center;
+} 
+.input-row ul li{ 
+    list-style-type: none;
+    border-radius: 4px; 
+    padding: 3px; 
+    cursor: pointer; 
+    background-color: var(--very-dark-cyan); 
+    color: var(--white);
+    font-size: 14px;
+    font-weight: bolder;
+}
+.input-row ul li:hover{ 
+    background-color: var(--strong-cyan);
+    color: var(--very-dark-cyan);
+}
+input[type="number"]::-webkit-inner-spin-button, 
+input[type="number"]::-webkit-outer-spin-button { 
+    -webkit-appearance: none; 
+    appearance: none; 
+    margin: 0;
+}
+.result{
+    background-color: var(--very-dark-cyan);  
+    height: 220px; 
+    display: flex; 
+    flex-direction: column;
+    box-sizing: border-box;
+    border-radius: 8px; 
+    padding: 20px;
+}
+.result .row{ 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center;
+    margin-top: -20px;
+}
+.tip-amount h6, .total h6{
+    color: var(--white);
+}
+.tip-amount p, .total p{
+    color: var(--dark-grayish-cyan);
+    font-weight: 700;
+    font-size: 8px;
+    margin-top: -25px;
+}
+.tip-amount{
+    margin-top: -10px;
+}
+.total{
+    margin-top: -12px;
+}
+.tip-amount-result p, .total-result p{
+    color: var(--strong-cyan);
+    font-size: 25px;
+    font-weight: 700;
+}
+.reset{
+    border-style: none;
+    margin-top: 20px; 
+    padding: 7px;
+    background-color: hsl(183, 100%, 20%); 
+    color: var(--very-dark-cyan);
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-weight: bold;
+}
+@media only screen and (max-device-width: 480px){
+    .logo img{
+        width: 25%;
+        top: 10%;
+    }
+    .card{
+        box-shadow: none;
+        max-width: 480px;
+        height: 700px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        padding: 40px;
+    }
+    .input-row p{ 
+        font-size: 14px;
+        margin-top: 40px;
+    }
+    .first input, .second input, .third input{
+        width: calc(100% - 20px); 
+        padding: 10px 6px;
+    }
+    .input-row span{
+        margin-top: 5px;
+    }
+    .input-row span > img{
+        width: 75%;
+    }
+    .first input::placeholder, .third input::placeholder, .second input::placeholder{
+        font-size: 15px;
+    }
+    .input-row ul{ 
+        grid-template-columns: repeat(2, 1fr); 
+        grid-gap: 10px; 
+        width: 97%;
+    }
+    .input-row ul li{ 
+        padding: 8px; 
+        font-size: 20px;
+    }
+    .second input{
+        width: 92%;
+    }
+    .result{ 
+        width: 300px;
+        margin-top: 40px;
+    }
+}
